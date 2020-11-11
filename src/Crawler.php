@@ -84,10 +84,18 @@ class Crawler {
     public function crawlSite( string $static_site_path ) : void {
         $crawled = 0;
         $cache_hits = 0;
+	    $bedrock_ver = 1;
 
         WsLog::l( 'Starting to crawl detected URLs.' );
 
-        $site_path = rtrim( SiteInfo::getURL( 'site' ), '/' );
+	    $site_path = rtrim( SiteInfo::getURL( 'site' ), '/' );
+
+        if($bedrock_ver){
+	        $site_path_array = explode('/', $site_path);
+	        $wp_dir = end($site_path_array);
+	        $site_path = rtrim( str_replace($wp_dir, '', $site_path), '/');
+        }
+
         $site_host = parse_url( $site_path, PHP_URL_HOST );
         $site_port = parse_url( $site_path, PHP_URL_PORT );
         $site_host = $site_port ? $site_host . ":$site_port" : $site_host;
