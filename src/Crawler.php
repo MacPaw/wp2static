@@ -84,6 +84,10 @@ class Crawler {
     public function crawlSite( string $static_site_path ) : void {
         $crawled = 0;
         $cache_hits = 0;
+
+        /*
+         * @TODO get $bedrock_ver from db option bedrock_ver
+         */
 	    $bedrock_ver = 1;
 
         WsLog::l( 'Starting to crawl detected URLs.' );
