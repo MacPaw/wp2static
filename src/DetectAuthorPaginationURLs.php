@@ -44,7 +44,7 @@ class DetectAuthorPaginationURLs {
 
             for ( $page = 1; $page <= $total_pages; $page++ ) {
                 $urls_to_include[] =
-                    "/{$author}{$pagination_base}/{$page}/";
+                    "/{$author}/{$pagination_base}/{$page}/";
             }
         }
 
