@@ -41,6 +41,12 @@ class DetectThemeAssets {
                 // Standardise all paths to use / (Windows support)
                 $filename = str_replace( '\\', '/', $filename );
 
+	            $filename =
+		            str_replace(
+			            $template_path,
+			            $template_url,
+			            $filename
+		            );
                 $detected_filename =
                     str_replace(
                         $site_path,
