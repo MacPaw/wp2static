@@ -27,8 +27,8 @@ class SiteInfo {
      */
     public function __construct() {
         $upload_path_and_url = wp_upload_dir();
-        $site_url = trailingslashit( site_url() );
-
+        //$site_url = trailingslashit( site_url() );
+	    $site_url = site_url();
 
 	    /*
 		* @TODO get $bedrock_ver from db option bedrock_ver
