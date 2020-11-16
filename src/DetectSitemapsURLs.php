@@ -41,6 +41,7 @@ class DetectSitemapsURLs {
 					$wp_site_url . 'post_tag-sitemap.xml', // yoast sitemap
 					$wp_site_url . 'author-sitemap.xml', // yoast sitemap
 					$wp_site_url . 'main-sitemap.xsl', //sitemap styles
+					$wp_site_url . 'feed', //fix for rss feed
                 ];
             }
             foreach ( $sitemaps as $sitemap ) {
