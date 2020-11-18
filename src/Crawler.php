@@ -85,20 +85,9 @@ class Crawler {
         $crawled = 0;
         $cache_hits = 0;
 
-        /*
-         * @TODO get $bedrock_ver from db option bedrock_ver
-         */
-	    $bedrock_ver = 1;
-
         WsLog::l( 'Starting to crawl detected URLs.' );
 
 	    $site_path = rtrim( SiteInfo::getURL( 'site' ), '/' );
-
-        if($bedrock_ver){
-	        $site_path_array = explode('/', $site_path);
-	        $wp_dir = end($site_path_array);
-	        $site_path = rtrim( str_replace($wp_dir, '', $site_path), '/');
-        }
 
         $site_host = parse_url( $site_path, PHP_URL_HOST );
         $site_port = parse_url( $site_path, PHP_URL_PORT );
@@ -123,8 +112,10 @@ class Crawler {
 
         $crawlable_paths = CrawlQueue::getCrawlablePaths();
         foreach ( $crawlable_paths as $root_relative_path ) {
+	        $root_relative_path = str_replace('/app/public', '', $root_relative_path);
             $absolute_uri = new URL( $site_path . $root_relative_path );
-            $url = $absolute_uri->get();
+
+	        $url = $absolute_uri->get();
 
             $response = $this->crawlURL( $url );
 
@@ -155,15 +146,30 @@ class Crawler {
 
             $crawled++;
 
+
             if ( $crawled_contents ) {
-                // do some magic here - naive: if URL ends in /, save to /index.html
+
+	            // do some magic here - naive: if URL ends in /, save to /index.html
                 // TODO: will need love for example, XML files
                 // check content type, serve .xml/rss, etc instead
-                if ( mb_substr( $root_relative_path, -1 ) === '/' ) {
-                    StaticSite::add( $root_relative_path . 'index.html', $crawled_contents );
-                } else {
-                    StaticSite::add( $root_relative_path, $crawled_contents );
-                }
+
+	            if(mb_substr( $root_relative_path, -1 ) === '/'){
+		            StaticSite::add( $root_relative_path . 'index.html', $crawled_contents );
+	            }
+
+	            $path_info = pathinfo( $root_relative_path );
+	            if ( empty( $path_info['extension'] ) && $path_info['basename'] === $path_info['filename'] ) {
+		            StaticSite::add( $root_relative_path . '/index.html', $crawled_contents );
+	            }else{
+		            StaticSite::add( $root_relative_path, $crawled_contents );
+	            }
+
+
+//                if ( mb_substr( $root_relative_path, -1 ) === '/' ) {
+//                    StaticSite::add( $root_relative_path . 'index.html', $crawled_contents );
+//                } else {
+//                    StaticSite::add( $root_relative_path, $crawled_contents );
+//                }
             }
 
             CrawlCache::addUrl(

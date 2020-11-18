@@ -27,8 +27,18 @@ class SiteInfo {
      */
     public function __construct() {
         $upload_path_and_url = wp_upload_dir();
-        $site_url = trailingslashit( site_url() );
+        //$site_url = trailingslashit( site_url() );
+	    $site_url = site_url();
 
+	    /*
+		* @TODO get $bedrock_ver from db option bedrock_ver
+		*/
+	    $bedrock_ver = 1;
+	    if($bedrock_ver){
+		    $site_url_array = explode('/', $site_url);
+		    $wp_dir = end($site_url_array);
+		    $site_url = str_replace($wp_dir, '', $site_url);
+	    }
         // properties which should not change during plugin execution
         self::$info = [
             // Core

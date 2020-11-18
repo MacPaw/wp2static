@@ -33,6 +33,10 @@ class DetectPostURLs {
             }
 
             $post_urls[] = $permalink;
+	        /***
+	         * @todo Check if AMP plugin is activated
+	         */
+            $post_urls[] = $permalink.'/amp';
         }
 
         return $post_urls;
