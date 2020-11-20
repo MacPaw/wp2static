@@ -28,6 +28,12 @@ class URLDetector {
             '/robots.txt',
             '/favicon.ico',
             '/sitemap.xml',
+	        '/post-sitemap.xml', // yoast sitemap
+	        '/category-sitemap.xml', // yoast sitemap
+	        '/post_tag-sitemap.xml', // yoast sitemap
+	        '/author-sitemap.xml', // yoast sitemap
+	        '/main-sitemap.xsl', //sitemap styles
+	        '/feed', //fix for rss feed
         ];
 
         /*
