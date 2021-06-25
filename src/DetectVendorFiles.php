@@ -23,8 +23,10 @@ class DetectVendorFiles {
 
         if ( is_dir( $vendor_cache_dir ) ) {
             $site_url = SiteInfo::getUrl( 'site' );
-            $content_url = SiteInfo::getUrl( 'content' );
-
+            // This hack needed for cli version of plugin
+            // In cli version we got http instead of https version, and it brokes our links
+            // during static generation
+            $content_url = str_replace("http", "https", SiteInfo::getUrl( 'content' ));
             // get difference between home and wp-contents URL
             $prefix = str_replace(
                 $site_url,
