@@ -25,7 +25,12 @@ class DetectThemeAssets {
             $template_path = SiteInfo::getPath( 'child_theme' );
             $template_url = SiteInfo::getUrl( 'child_theme' );
         }
-
+        // This hack needed for cli version of plugin
+        // In cli version we got http instead of https version, and it brokes our links
+        // during static generation
+        if(!str_contains($template_url, "https")){
+            $template_url = str_replace( "http", "https", $template_url);
+        }
         if ( is_dir( $template_path ) ) {
             $iterator = new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator(
