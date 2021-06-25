@@ -17,7 +17,12 @@ class DetectPluginAssets {
 
         $plugins_path = SiteInfo::getPath( 'plugins' );
         $plugins_url = SiteInfo::getUrl( 'plugins' );
-
+        // This hack needed for cli version of plugin
+        // In cli version we got http instead of https version, and it brokes our links
+        // during static generation
+        if(!str_contains($plugins_url, "https")){
+            $plugins_url = str_replace( "http", "https", $plugins_url);
+        }
         if ( is_dir( $plugins_path ) ) {
             $iterator = new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator(
