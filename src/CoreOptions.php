@@ -203,6 +203,14 @@ class CoreOptions {
             'How to send completion webhook payload (GET|POST).'
         );
 
+        $queries[] = $wpdb->prepare(
+            $query_string,
+            'crawlConcurrency',
+            '1',
+            'Crawl Concurrency',
+            'The maximum number of files that will be crawled at the same time.'
+        );
+
         foreach ( $queries as $query ) {
             $wpdb->query( $query );
         }
@@ -404,6 +412,12 @@ class CoreOptions {
                     $table_name,
                     [ 'value' => isset( $_POST['useCrawlCaching'] ) ? 1 : 0 ],
                     [ 'name' => 'useCrawlCaching' ]
+                );
+
+                $wpdb->update(
+                    $table_name,
+                    [ 'value' => $crawl_concurrency < 1 ? 1 : $crawl_concurrency ],
+                    [ 'name' => 'crawlConcurrency' ]
                 );
 
                 $wpdb->update(

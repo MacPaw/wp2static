@@ -161,6 +161,22 @@ function displayCheckbox($a = null, $b = null, $c = null) {
                     />
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <label
+                        for="<?php echo $view['coreOptions']['crawlConcurrency']->name; ?>"
+                    ><?php echo $view['coreOptions']['crawlConcurrency']->label; ?></label>
+                </td>
+                <td>
+                    <input
+                        id="<?php echo $view['coreOptions']['crawlConcurrency']->name; ?>"
+                        name="<?php echo $view['coreOptions']['crawlConcurrency']->name; ?>"
+                        value="1"
+                        type="checkbox"
+                        <?php echo (int) $view['coreOptions']['crawlConcurrency']->value !== '' ? $view['coreOptions']['crawlConcurrency']->value : ''; ?>
+                    />
+                </td>
+            </tr>
 
         </tbody>
     </table>
