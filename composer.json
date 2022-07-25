@@ -20,7 +20,8 @@
     "require": {
         "php": ">=7.3",
         "wa72/url": "^0.7.1",
-        "vipnytt/sitemapparser": "^1.0"
+        "vipnytt/sitemapparser": "^1.0",
+        "leonstafford/wp2staticguzzle": "^7.2"
     },
     "require-dev": {
         "phpstan/phpstan": "*",
@@ -53,7 +54,10 @@
         "preferred-install": {
             "*": "dist"
         },
-        "classmap-authoritative": true
+        "classmap-authoritative": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "scripts": {
         "phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse",
