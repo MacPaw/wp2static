@@ -207,7 +207,7 @@ class Crawler {
     public function crawlURL( string $url ) : ?array {
         $handle = $this->ch;
 
-        if ( ! is_resource( $handle ) ) {
+        if ( ! $handle instanceof \CurlHandle && ! is_resource( $handle ) ) {
             return null;
         }
 
